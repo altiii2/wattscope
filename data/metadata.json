@@ -1,0 +1,32 @@
+{
+  "source": "UCI ElectricityLoadDiagrams20112014",
+  "source_url": "https://archive.ics.uci.edu/static/public/321/electricityloaddiagrams20112014.zip",
+  "source_page": "https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112014",
+  "citation": "Trindade, A. (2015). ElectricityLoadDiagrams20112014. DOI: 10.24432/C58C86.",
+  "license": "CC BY 4.0",
+  "archive_sha256": "f6c4d0e0df12ecdb9ea008dd6eef3518adb52c559d04a9bac2e1b81dcfc8d4e1",
+  "processed_sha256": "8ff5138d07c4aa03bcae751e2f30e5f66beca5dd0f434733415f9d8ada5d3267",
+  "selection": "First eight source columns, fixed before model evaluation; not chosen by performance.",
+  "clients": [
+    "MT_001",
+    "MT_002",
+    "MT_003",
+    "MT_004",
+    "MT_005",
+    "MT_006",
+    "MT_007",
+    "MT_008"
+  ],
+  "rows": 17521,
+  "start": "2013-01-01T00:00:00",
+  "end": "2015-01-01T00:00:00",
+  "unit": "kWh",
+  "aggregation": "Sum four 15-minute power readings and divide by four; hourly intervals end at label.",
+  "clock": "Original normalized Portuguese local clock, naive timestamps; not UTC.",
+  "source_caveats": [
+    "UCI documents DST zero readings in March and combined readings in October; retained, not imputed.",
+    "Leading zeros can represent clients not yet active, rather than physical zero demand.",
+    "Interval-end interpretation is a documented preprocessing assumption, not a timezone correction.",
+    "Historic anonymized consumption cannot establish current or commercial forecasting performance."
+  ]
+}
