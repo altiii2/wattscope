@@ -2,7 +2,7 @@
 
 ## Intended use
 
-A reproducible educational benchmark and local portfolio demonstration of hourly electricity forecasting. The service supports the eight predetermined source clients and daily midnight origins in the source clock. It is suitable for reviewing ML engineering methods, not for grid control, billing, safety-critical decisions or promises of commercial savings.
+A reproducible benchmark of hourly electricity forecasting, with an API and dashboard for exploring historical forecasts. The evaluated interface supports eight predetermined clients and daily midnight origins in the source clock. Grid control, billing and safety-critical decisions are outside its intended use; commercial savings have not been evaluated.
 
 ## Data and targets
 
@@ -50,4 +50,4 @@ Horizon-specific interval widths come from held-out calibration errors, normaliz
 
 ## Development and extension
 
-The learning guide and portfolio checklist support independent inspection and extension. Useful next experiments include an expanded predeclared client subset, interval recalibration under drift, and a richer calendar model tested on a new untouched period.
+Extension candidates include a larger client subset selected before evaluation, interval recalibration under drift, and richer calendar features evaluated on a new untouched period.

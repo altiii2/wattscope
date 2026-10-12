@@ -31,7 +31,7 @@ On 12 October 2026, [GitHub Actions run 38258258551](https://github.com/altiii2/
 
 ## Development dependency note
 
-The test client emitted a Starlette deprecation warning about its current `httpx` compatibility path. Tests completed successfully. This is recorded rather than suppressing the warning.
+The test client emitted a Starlette deprecation warning about its current `httpx` compatibility path. Tests completed successfully.
 
 ## Re-run
 
