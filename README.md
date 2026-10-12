@@ -6,7 +6,7 @@
 
 WattScope predicts the next 24 hourly energy readings for eight predetermined clients from the original UCI electricity dataset. It compares a pooled gradient-boosting model with previous-day and previous-week seasonal baselines, then serves the frozen model through a FastAPI dashboard.
 
-This is a **historical benchmark**, not a live energy feed. Every reported result is computed from real held-out observations. The source, methodology, tests and artifacts are available for inspection.
+WattScope is a **historical benchmark**. All reported results are computed from held-out observations. The repository includes the source code, experiment configuration, tests and prediction artifacts.
 
 ![Forecast example](reports/forecast_example.png)
 
@@ -17,7 +17,7 @@ This is a **historical benchmark**, not a live energy feed. Every reported resul
 - Keeping training, parameter selection, calibration and final testing chronologically separate.
 - Comparing against meaningful seasonal baselines and reporting errors per client, month and horizon.
 - Serving exactly the same fitted model and feature code used in the experiment.
-- Documenting uncertainty, reproducibility and limits rather than inventing performance claims.
+- Reporting empirical interval coverage, reproducibility details and evaluation limits.
 
 ## Quick start
 
@@ -74,7 +74,7 @@ See [the generated experiment report](reports/EXPERIMENT_REPORT.md) for measured
 
 ![Client comparison](reports/client_comparison.png)
 
-Pooled WAPE emphasizes higher-volume clients; macro-client and per-client results are reported alongside it. A model may perform differently across clients and months, and no claim of universal superiority is made.
+Pooled WAPE weights higher-volume clients more heavily. Macro-client and per-client results show how performance varies across clients and months.
 
 ## Prediction intervals
 
@@ -120,14 +120,15 @@ reports/           Measured results, predictions and figures
 docs/              Learning guide, model card and validation notes
 ```
 
-## Limitations and development notes
+## Limitations
 
 - The fixed eight-client subset is a tractable benchmark, not a representative sample of every energy customer.
 - UCI documents daylight-saving-time artifacts and zeros for not-yet-active clients. Those readings are retained and disclosed, not silently repaired.
 - The interval-end interpretation is a documented preprocessing assumption. Timestamps are not converted to UTC.
 - No weather, customer identities, tariffs, business savings or live operational results are inferred from this anonymous historical source.
 - The shared model is designed for the listed clients; unseen sites and irregular custom histories need a separate evaluation.
-- [Learning guide](docs/LEARNING_GUIDE.md) · [Portfolio checklist](docs/PORTFOLIO_CHECKLIST.md).
+
+See the [technical walkthrough](docs/LEARNING_GUIDE.md), [model card](docs/MODEL_CARD.md), [reproducibility checklist](docs/PORTFOLIO_CHECKLIST.md) and [validation notes](docs/VALIDATION.md) for implementation details and checks.
 
 ## Data attribution and licenses
 
