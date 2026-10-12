@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="WattScope: a reproducible electricity forecasting study with seasonal baselines and calibrated uncertainty.">
+  <title>WattScope · Forecast studio</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Main navigation">
+    <a class="brand" href="#main" aria-label="WattScope home">
+      <span class="brand-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 2-9 12h6l-1 8 9-12h-6l1-8Z" fill="currentColor"/></svg></span>
+      <span>WattScope<span class="brand-caption">FORECAST STUDIO</span></span>
+    </a>
+    <div class="nav-heading">WORKSPACE</div>
+    <nav>
+      <a class="nav-link active" href="#forecast-section"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16M7 14l4-4 4 3 5-7"/></svg>Forecast explorer<span class="nav-dot"></span></a>
+      <a class="nav-link" href="#evaluation-section"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10h4v10M10 20V4h4v16M15 20v-7h4v7"/></svg>Model evaluation</a>
+      <a class="nav-link" href="#method-section"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg>Data &amp; method</a>
+    </nav>
+    <div class="sidebar-note"><span class="note-icon">↗</span><strong>Built for transparency</strong><p>One public dataset. Reproducible results. No live-feed claims.</p><a href="/docs" target="_blank" rel="noopener">Explore the API <span aria-hidden="true">→</span></a></div>
+    <div class="sidebar-footer"><span class="small-mark">W</span><div>Portfolio study<span>Electricity · Machine learning</span></div></div>
+  </aside>
+  <main id="main" class="main">
+    <header class="topbar"><span class="breadcrumb">Workspace <span>/</span> Forecast explorer</span><div class="topbar-right"><span class="dataset-pill">PUBLIC DATA</span><a href="/docs" target="_blank" rel="noopener">API docs <span aria-hidden="true">↗</span></a></div></header>
+    <section class="page-heading">
+      <div><div class="eyebrow">A CLEARER VIEW OF DEMAND</div><h1>Electricity, one day ahead.</h1><p>A 24-hour forecast with seasonal baselines and visible uncertainty.</p></div>
+      <button id="download-button" class="button button-light" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 17v4h14v-4"/></svg>Export forecast</button>
+    </section>
+    <div class="benchmark-banner"><span class="benchmark-dot"></span><strong>Historical benchmark</strong><span class="banner-divider">/</span><span>Not a live energy feed. Forecasts are evaluated against held-out observations.</span></div>
+    <div id="error-message" class="error-message" role="alert" hidden></div>
+    <section class="metric-grid" aria-label="Forecast and holdout metrics">
+      <article class="metric-card"><div class="metric-label">Forecast energy <span class="metric-icon">↗</span></div><div class="metric-value" id="energy-value">—</div><div class="metric-context">Total over the next 24 hours</div></article>
+      <article class="metric-card"><div class="metric-label">Peak hourly demand <span class="metric-icon">⌁</span></div><div class="metric-value" id="peak-value">—</div><div class="metric-context" id="peak-context">Highest predicted hour</div></article>
+      <article class="metric-card"><div class="metric-label">Holdout WAPE <span class="metric-icon">◎</span></div><div class="metric-value" id="wape-value">—</div><div class="metric-context" id="improvement-context">Model error across the test set</div></article>
+      <article class="metric-card"><div class="metric-label">Interval coverage <span class="metric-icon">▥</span></div><div class="metric-value" id="coverage-value">—</div><div class="metric-context">Observed coverage on held-out data</div></article>
+    </section>
+    <section id="forecast-section" class="panel forecast-panel">
+      <div class="panel-heading"><div><div class="section-kicker">FORECAST EXPLORER</div><h2>Your demand, in context.</h2><p id="forecast-subtitle">Historical observations followed by a 24-hour forecast.</p></div><span id="forecast-status" class="status-pill" aria-live="polite"><span></span>Loading data</span></div>
+      <form id="forecast-form" class="forecast-controls">
+        <div class="field client-field"><label for="client-select">Customer meter</label><select id="client-select" disabled><option>Loading meters…</option></select></div>
+        <div class="field origin-field"><label for="origin-input">Forecast origin <span>dataset time</span></label><input id="origin-input" type="datetime-local" step="86400" aria-describedby="origin-help"></div>
+        <button id="forecast-button" class="button button-primary" type="submit" disabled>Update forecast <span aria-hidden="true">→</span></button>
+        <button id="reset-button" class="reset-button" type="button" disabled>Default window</button>
+      </form>
+      <p id="origin-help" class="control-help">Choose an observed midnight (00:00) in the dataset clock. Leaving it blank uses the default benchmark window.</p>
+      <div class="chart-toolbar"><div class="chart-legend"><span><i class="legend-history"></i>Observed</span><span><i class="legend-model"></i>Forecast</span><span><i class="legend-interval"></i>Prediction interval</span><span id="actual-legend" hidden><i class="legend-actual"></i>Holdout actual</span></div><label class="toggle-label"><input id="baseline-toggle" type="checkbox" checked><span>Daily baseline</span></label></div>
+      <div id="chart-wrap" class="chart-wrap" aria-busy="true"><svg id="forecast-chart" role="img" aria-labelledby="chart-title chart-description"><title id="chart-title">Electricity load forecast</title><desc id="chart-description">Loading the selected meter's observations and forecast.</desc></svg><div id="chart-empty" class="chart-empty"><span class="chart-loading"></span><span>Preparing your forecast…</span></div><div id="chart-tooltip" class="chart-tooltip" hidden></div></div>
+      <div class="chart-footer"><div><span class="footer-dot"></span><span id="model-name">Model loading</span></div><p id="interval-note">Intervals express forecast uncertainty; empirical coverage is not a guarantee.</p></div>
+    </section>
+    <section class="lower-grid">
+      <article id="evaluation-section" class="panel evaluation-panel"><div class="panel-heading"><div><div class="section-kicker">BEYOND A SINGLE FORECAST</div><h2>Earn the improvement.</h2><p>Every model is compared with simple seasonal baselines.</p></div><span class="outline-pill">HOLDOUT RESULTS</span></div><div class="table-scroll"><table class="metric-table"><caption class="sr-only">Model and baseline performance across the held-out test set</caption><thead><tr><th scope="col">Method</th><th scope="col">MAE <small>kWh</small></th><th scope="col">RMSE <small>kWh</small></th><th scope="col">WAPE</th></tr></thead><tbody id="metrics-body"><tr><td colspan="4">Loading evaluation…</td></tr></tbody></table></div><div class="evaluation-note"><span>i</span><p>Lower error is better. These are aggregate test-set results, not a score for the selected window.</p></div></article>
+      <article id="method-section" class="panel method-panel"><div class="panel-heading"><div><div class="section-kicker">THE STUDY BEHIND THE CHART</div><h2>Designed to be audited.</h2></div><span class="audit-icon">✓</span></div><dl class="data-details"><div><dt>Dataset</dt><dd id="dataset-name">—</dd></div><div><dt>Customer meters</dt><dd id="client-count">—</dd></div><div><dt>Evaluation protocol</dt><dd id="evaluation-protocol">—</dd></div></dl><div class="split-label">CHRONOLOGICAL DATA SPLIT</div><div class="split-track" aria-hidden="true"><span class="split-train"></span><span class="split-validation"></span><span class="split-calibration"></span><span class="split-test"></span></div><div id="split-details" class="split-details"></div><p class="split-note">Selected model refit through 15 Sep 2014 00:00; frozen before calibration.</p></article>
+    </section>
+    <section class="panel study-notes"><div><div class="section-kicker">MODEL INGREDIENTS</div><h2>Past observations. Honest evaluation.</h2></div><div id="feature-list" class="feature-list"></div><ul id="study-note-list" class="study-note-list"></ul></section>
+    <footer class="page-footer"><span>WattScope <span class="footer-slash">/</span> A reproducible electricity forecasting study</span><a href="https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112014" target="_blank" rel="noopener">UCI dataset <span aria-hidden="true">↗</span></a></footer>
+  </main>
+</body>
+</html>
