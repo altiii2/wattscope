@@ -1,4 +1,4 @@
-# Local validation
+# Validation
 
 Validation was performed on Windows with Python 3.12.14 and the exact versions in `requirements.lock`.
 
@@ -20,10 +20,13 @@ Validation was performed on Windows with Python 3.12.14 and the exact versions i
 
 Inference is allowed only from 1 October 2014 onward, after both fitting and calibration. Earlier origins would otherwise expose interval widths calibrated using outcomes that had not yet occurred at those origins. The regression tests reject an origin inside the calibration period. This correction does not change the clean Q4 benchmark results.
 
+## Hosted validation
+
+On 12 October 2026, [GitHub Actions run 38258258551](https://github.com/altiii2/wattscope/actions/runs/38258258551) completed successfully on Ubuntu with Python 3.12 at commit `ec0a6b97f6928e09a81ef0d5e3d279ad352525d3`. The run installed the locked dependencies and editable package, then passed `ruff check .` and `pytest -q`.
+
 ## Not executed locally
 
 - Docker build/run: Docker is not installed on the validation host. The recipe is supplied, not claimed as tested.
-- GitHub Actions: the workflow is supplied; a hosted run has not occurred.
 - Cloud deployment, uptime testing and operational integration with live energy meters.
 
 ## Development dependency note
