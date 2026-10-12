@@ -1,5 +1,7 @@
 # WattScope
 
+[![Python checks](https://github.com/altiii2/wattscope/actions/workflows/checks.yml/badge.svg)](https://github.com/altiii2/wattscope/actions/workflows/checks.yml)
+
 **Day-ahead electricity forecasting with reproducible experiments, calibrated uncertainty, and a working API.**
 
 WattScope predicts the next 24 hourly energy readings for eight predetermined clients from the original UCI electricity dataset. It compares a pooled gradient-boosting model with previous-day and previous-week seasonal baselines, then serves the frozen model through a FastAPI dashboard.
@@ -22,6 +24,8 @@ This is a **historical benchmark**, not a live energy feed. Every reported resul
 Use Python 3.12, the tested reference environment. The repository includes the processed subset, fitted model and measured report, so the dashboard does not require a fresh download or training run.
 
 ```bash
+git clone https://github.com/altiii2/wattscope.git
+cd wattscope
 python -m venv .venv
 # Windows PowerShell: .venv\Scripts\Activate.ps1
 # macOS/Linux: source .venv/bin/activate
