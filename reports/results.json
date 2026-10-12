@@ -1,0 +1,369 @@
+{
+  "project_name": "WattScope",
+  "default_origin": "2014-12-15T00:00:00",
+  "client_id_default": "MT_001",
+  "data": {
+    "source": "UCI ElectricityLoadDiagrams20112014",
+    "unit": "kWh",
+    "clients": 8,
+    "start": "2013-01-01T00:00:00",
+    "end": "2015-01-01T00:00:00",
+    "train_start": "2013-01-08",
+    "train_end": "2014-08-31",
+    "validation_start": "2014-09-01",
+    "validation_end": "2014-09-14",
+    "calibration_start": "2014-09-16",
+    "calibration_end": "2014-09-29",
+    "test_start": "2014-10-01",
+    "test_end": "2014-12-31"
+  },
+  "metrics": {
+    "model": {
+      "mae": 6.4038072142657825,
+      "rmse": 13.267507677640694,
+      "wape": 7.596438143024911
+    },
+    "previous_day": {
+      "mae": 8.309016773051406,
+      "rmse": 17.82467105106572,
+      "wape": 9.856469727138444
+    },
+    "previous_week": {
+      "mae": 7.424821419388022,
+      "rmse": 14.731539292776088,
+      "wape": 8.807603781347474
+    }
+  },
+  "model": {
+    "name": "Histogram gradient boosting",
+    "features": [
+      "horizon",
+      "hour_sin",
+      "hour_cos",
+      "weekday_sin",
+      "weekday_cos",
+      "month_sin",
+      "month_cos",
+      "is_weekend",
+      "client_code",
+      "lag_24",
+      "lag_48",
+      "lag_168",
+      "last_value",
+      "mean_24",
+      "std_24",
+      "min_24",
+      "max_24",
+      "mean_48",
+      "std_168",
+      "last_change",
+      "log_scale"
+    ],
+    "configuration": {
+      "max_leaf_nodes": 31,
+      "l2_regularization": 1.0,
+      "max_iter": 180
+    },
+    "interval_note": "Nominal 90% pointwise intervals, calibrated on held-out September residuals by horizon. Serial dependence and distribution shift mean 90% coverage is not guaranteed. These are not simultaneous 24-hour path intervals.",
+    "interval_coverage": 0.8839447463768116,
+    "mean_interval_width_kwh": 41.533584295382354,
+    "nominal_pointwise_coverage": 0.9,
+    "fit_through": "2014-09-15T00:00:00",
+    "calibration_through": "2014-09-30T00:00:00",
+    "forecast_start": "2014-10-01T00:00:00"
+  },
+  "validation": {
+    "strategy": "Frozen model \u00b7 daily rolling origins \u00b7 held-out Q4 2014",
+    "horizon_hours": 24,
+    "train_examples": 115392,
+    "refit_examples": 118080,
+    "selection_examples": 2688,
+    "calibration_examples": 2688,
+    "test_examples": 17664,
+    "selection_metric": "Validation MAE in original kWh units",
+    "origin_clock": "Midnight in the original normalized Portuguese local clock"
+  },
+  "selection": [
+    {
+      "configuration": {
+        "max_leaf_nodes": 15,
+        "l2_regularization": 1.0,
+        "max_iter": 120
+      },
+      "validation": {
+        "mae": 5.6224364568305685,
+        "rmse": 9.824763066136224,
+        "wape": 7.300247552433511
+      },
+      "fit_seconds": 0.844
+    },
+    {
+      "configuration": {
+        "max_leaf_nodes": 31,
+        "l2_regularization": 1.0,
+        "max_iter": 180
+      },
+      "validation": {
+        "mae": 5.4013372597276375,
+        "rmse": 9.372022958261578,
+        "wape": 7.013169364020233
+      },
+      "fit_seconds": 1.135
+    },
+    {
+      "configuration": {
+        "max_leaf_nodes": 31,
+        "l2_regularization": 5.0,
+        "max_iter": 180
+      },
+      "validation": {
+        "mae": 5.449203821897455,
+        "rmse": 9.416640504545791,
+        "wape": 7.0753199558511275
+      },
+      "fit_seconds": 1.109
+    }
+  ],
+  "folds": [
+    {
+      "period": "2014-10",
+      "predictions": 5952,
+      "model": {
+        "mae": 5.275205189004409,
+        "rmse": 10.086800511127187,
+        "wape": 7.016967946682933
+      },
+      "previous_day": {
+        "mae": 6.958847399627016,
+        "rmse": 14.165773826513902,
+        "wape": 9.256513708854678
+      },
+      "previous_week": {
+        "mae": 6.0998917626310485,
+        "rmse": 11.608352864622764,
+        "wape": 8.113948831001869
+      },
+      "interval_coverage": 0.8756720430107527
+    },
+    {
+      "period": "2014-11",
+      "predictions": 5760,
+      "model": {
+        "mae": 5.84960833116747,
+        "rmse": 11.346147729892369,
+        "wape": 7.016077428765437
+      },
+      "previous_day": {
+        "mae": 7.769486103059027,
+        "rmse": 15.750186224799231,
+        "wape": 9.31879760057367
+      },
+      "previous_week": {
+        "mae": 7.193094207842013,
+        "rmse": 13.798173151380855,
+        "wape": 8.627467525599519
+      },
+      "interval_coverage": 0.8998263888888889
+    },
+    {
+      "period": "2014-12",
+      "predictions": 5952,
+      "model": {
+        "mae": 8.068730739299717,
+        "rmse": 17.206862835161235,
+        "wape": 8.554784466384378
+      },
+      "previous_day": {
+        "mae": 10.181312601307123,
+        "rmse": 22.40920321347145,
+        "wape": 10.794626528412945
+      },
+      "previous_week": {
+        "mae": 8.974003216350807,
+        "rmse": 18.029207469567215,
+        "wape": 9.514589815545667
+      },
+      "interval_coverage": 0.8768481182795699
+    }
+  ],
+  "per_client": [
+    {
+      "client_id": "MT_001",
+      "model": {
+        "mae": 0.9205202671057795,
+        "rmse": 1.4660306905864786,
+        "wape": 48.25964276931157
+      },
+      "previous_day": {
+        "mae": 0.621442332839674,
+        "rmse": 1.3261067396578046,
+        "wape": 32.580037676806505
+      },
+      "previous_week": {
+        "mae": 0.7003259952581522,
+        "rmse": 1.3441853770876724,
+        "wape": 36.715630889349285
+      },
+      "interval_coverage": 0.42346014492753625
+    },
+    {
+      "client_id": "MT_002",
+      "model": {
+        "mae": 1.025140979775478,
+        "rmse": 1.500901641610508,
+        "wape": 4.274805973743427
+      },
+      "previous_day": {
+        "mae": 1.1603512120606883,
+        "rmse": 1.89666241550249,
+        "wape": 4.838628433372974
+      },
+      "previous_week": {
+        "mae": 1.231458861557971,
+        "rmse": 1.8754389430173792,
+        "wape": 5.135145118245343
+      },
+      "interval_coverage": 0.9913949275362319
+    },
+    {
+      "client_id": "MT_003",
+      "model": {
+        "mae": 0.1442037497671723,
+        "rmse": 0.39177438450669655,
+        "wape": 8.51636701223673
+      },
+      "previous_day": {
+        "mae": 0.21661220819293478,
+        "rmse": 0.465966554607809,
+        "wape": 12.792656690831892
+      },
+      "previous_week": {
+        "mae": 0.01878879737771739,
+        "rmse": 0.18050950365180043,
+        "wape": 1.1096264448431068
+      },
+      "interval_coverage": 0.9189311594202898
+    },
+    {
+      "client_id": "MT_004",
+      "model": {
+        "mae": 10.141349246803355,
+        "rmse": 14.297013330302216,
+        "wape": 8.077374466200165
+      },
+      "previous_day": {
+        "mae": 13.45463097955163,
+        "rmse": 19.59629506344763,
+        "wape": 10.716334688959892
+      },
+      "previous_week": {
+        "mae": 11.682849505081522,
+        "rmse": 16.15287667794412,
+        "wape": 9.305147469854663
+      },
+      "interval_coverage": 0.96875
+    },
+    {
+      "client_id": "MT_005",
+      "model": {
+        "mae": 5.2764793877384895,
+        "rmse": 7.064725021915541,
+        "wape": 9.198083548013834
+      },
+      "previous_day": {
+        "mae": 6.14064156959692,
+        "rmse": 8.29258972325716,
+        "wape": 10.704511482943108
+      },
+      "previous_week": {
+        "mae": 7.447005346598731,
+        "rmse": 9.796683826589852,
+        "wape": 12.981795687423183
+      },
+      "interval_coverage": 0.9465579710144928
+    },
+    {
+      "client_id": "MT_006",
+      "model": {
+        "mae": 15.505369128093514,
+        "rmse": 21.30513269016215,
+        "wape": 7.758114495455591
+      },
+      "previous_day": {
+        "mae": 20.22306601544837,
+        "rmse": 28.389771520579135,
+        "wape": 10.118615061716776
+      },
+      "previous_week": {
+        "mae": 18.61972427129076,
+        "rmse": 25.6832404730693,
+        "wape": 9.316382704411547
+      },
+      "interval_coverage": 0.9732789855072463
+    },
+    {
+      "client_id": "MT_007",
+      "model": {
+        "mae": 0.5751434480643638,
+        "rmse": 0.8033432952356429,
+        "wape": 13.032531986875348
+      },
+      "previous_day": {
+        "mae": 0.695989095588768,
+        "rmse": 0.9825251778543582,
+        "wape": 15.770848440165128
+      },
+      "previous_week": {
+        "mae": 0.7403444793976449,
+        "rmse": 1.0273805086008843,
+        "wape": 16.77592458286445
+      },
+      "interval_coverage": 0.8682065217391305
+    },
+    {
+      "client_id": "MT_008",
+      "model": {
+        "mae": 17.642251506778106,
+        "rmse": 26.358863247883384,
+        "wape": 6.795186209246422
+      },
+      "previous_day": {
+        "mae": 23.95940077113225,
+        "rmse": 35.7274665369442,
+        "wape": 9.228334016168816
+      },
+      "previous_week": {
+        "mae": 18.95807409854167,
+        "rmse": 26.706076450144806,
+        "wape": 7.3019956448749435
+      },
+      "interval_coverage": 0.9809782608695652
+    }
+  ],
+  "macro_client_wape": {
+    "model": 13.239013307635386,
+    "previous_day": 13.343745811370637,
+    "previous_week": 12.330206067733315
+  },
+  "notes": [
+    "UCI documents DST zero readings in March and combined readings in October; retained, not imputed.",
+    "Leading zeros can represent clients not yet active, rather than physical zero demand.",
+    "Interval-end interpretation is a documented preprocessing assumption, not a timezone correction.",
+    "Historic anonymized consumption cannot establish current or commercial forecasting performance.",
+    "Eight predetermined clients; results do not generalize to all 370 clients or unseen sites.",
+    "Hyperparameters chosen on validation only; the fitted model is not changed after calibration.",
+    "Actual historical observations update the feature history at each daily forecast origin.",
+    "Pooled WAPE weights high-volume clients more heavily; per-client and macro scores are also reported."
+  ],
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "3.0.1",
+    "scikit-learn": "1.7.2",
+    "scipy": "1.18.1",
+    "joblib": "1.6.0",
+    "matplotlib": "3.11.2"
+  },
+  "dataset_sha256": "8ff5138d07c4aa03bcae751e2f30e5f66beca5dd0f434733415f9d8ada5d3267",
+  "elapsed_seconds": 6.301
+}
